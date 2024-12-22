@@ -17,7 +17,7 @@ const TodoDetails = () => {
   const loadTodoDetails = async () => {
     setIsLoading(true);
     try {
-      // Try to get the todo from Dexie first
+     
       const todos = await getTodosFromDB();
       const selectedTodo = todos.find((item) => item.id === parseInt(id));
       
@@ -40,13 +40,13 @@ const TodoDetails = () => {
     try {
       const updatedTodo = { ...todo, completed: !todo.completed };
       
-      // Try to update both API and Dexie
+     
       const result = await updateTodo(todo.id, updatedTodo);
       setTodo(result);
       
     } catch (error) {
       console.error('Failed to update todo:', error);
-      // Even if API fails, update local Dexie
+     
       await updateTodoInDB(todo.id, { ...todo, completed: !todo.completed });
       setTodo(prev => ({ ...prev, completed: !prev.completed }));
     }

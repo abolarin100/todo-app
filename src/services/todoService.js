@@ -24,11 +24,11 @@ export const addTodo = async (newTodo) => {
   try {
     const response = await axios.post(API_URL, newTodo);
     const createdTodo = response.data;
-    await addTodoToDB(createdTodo); // Persist to Dexie
+    await addTodoToDB(createdTodo); 
     return createdTodo;
   } catch {
     const fallbackTodo = { ...newTodo, id: Date.now() };
-    await addTodoToDB(fallbackTodo); // Offline mode
+    await addTodoToDB(fallbackTodo); 
     return fallbackTodo;
   }
 };
@@ -36,10 +36,10 @@ export const addTodo = async (newTodo) => {
 export const updateTodo = async (id, updatedTodo) => {
   try {
     const response = await axios.put(`${API_URL}/${id}`, updatedTodo);
-    await updateTodoInDB(id, response.data); // Sync to Dexie
+    await updateTodoInDB(id, response.data); 
     return response.data;
   } catch {
-    await updateTodoInDB(id, updatedTodo); // Offline update
+    await updateTodoInDB(id, updatedTodo); 
     return updatedTodo;
   }
 };
@@ -47,10 +47,10 @@ export const updateTodo = async (id, updatedTodo) => {
 export const deleteTodo = async (id) => {
   try {
     await axios.delete(`${API_URL}/${id}`);
-    await deleteTodoFromDB(id); // Sync to Dexie
+    await deleteTodoFromDB(id); 
     return true;
   } catch {
-    await deleteTodoFromDB(id); // Offline delete
+    await deleteTodoFromDB(id); 
     return true;
   }
 };
